@@ -1,0 +1,93 @@
+[
+    {
+        "id": "1",
+        "name": "comercio A",
+        "cuit": "20111111111",
+        "concepts":["1", "11", "111", "1111", "11111", "111111"] ,
+        "currentBalance": "100",
+        "active": "true",
+        "lastSale": "2022-01-01"
+    },
+    {
+        "id": "2",
+        "name": "comercio B",
+        "cuit": "20222222222",
+        "concepts":["2", "22", "222", "2222", "22222", "222222"] ,
+        "currentBalance": "200",
+        "active": "false",
+        "lastSale": "2022-02-02"
+    },
+    {
+        "id": "3",
+        "name": "comercio C",
+        "cuit": "20333333333",
+        "concepts":["3", "33", "333", "3333", "33333", "333333"] ,
+        "currentBalance": "300",
+        "active": "true",
+        "lastSale": "2022-03-03"
+    },    {
+        "id": "4",
+        "name": "comercio D",
+        "cuit": "20444444444",
+        "concepts":["4", "44", "444", "4444", "44444", "444444"] ,
+        "currentBalance": "400",
+        "active": "true",
+        "lastSale": "2022-04-04"
+    },    {
+        "id": "5",
+        "name": "comercio E",
+        "cuit": "20555555555",
+        "concepts":["5", "55", "555", "5555", "55555", "555555"] ,
+        "currentBalance": "500",
+        "active": "false",
+        "lastSale": "2022-05-05"
+    },    {
+        "id": "6",
+        "name": "comercio F",
+        "cuit": "20666666666",
+        "concepts":["6", "66", "666", "6666", "66666", "666666"] ,
+        "currentBalance": "600",
+        "active": "true",
+        "lastSale": "2022-06-06"
+    },    {
+        "id": "7",
+        "name": "comercio G",
+        "cuit": "20777777777",
+        "concepts":["7", "77", "777", "7777", "77777", "777777"] ,
+        "currentBalance": "700",
+        "active": "false",
+        "lastSale": "2022-07-07"
+    },    {
+        "id": "8",
+        "name": "comercio H",
+        "cuit": "20888888888",
+        "concepts":["8", "88", "888", "8888", "88888", "888888"] ,
+        "currentBalance": "800",
+        "active": "false",
+        "lastSale": "2022-08-08"
+    },    {
+        "id": "9",
+        "name": "comercio I",
+        "cuit": "20000000009",
+        "concepts":["9", "99", "999", "9999", "99999", "999999"] ,
+        "currentBalance": "900",
+        "active": "true",
+        "lastSale": "2022-09-09"
+    },    {
+        "id": "10",
+        "name": "comercio J",
+        "cuit": "20111111110",
+        "concepts":["0", "00", "000", "0000", "00000", "000000"] ,
+        "currentBalance": "1000",
+        "active": "true",
+        "lastSale": "2022-01-10"
+    },    {
+        "id": "11",
+        "name": "comercio K",
+        "cuit": "20111111111",
+        "concepts":["1", "11", "111", "1111", "11111", "111111"] ,
+        "currentBalance": "1100",
+        "active": "true",
+        "lastSale": "2022-01-11"
+    }
+]
