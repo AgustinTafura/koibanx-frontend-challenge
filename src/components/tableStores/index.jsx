@@ -1,15 +1,52 @@
-import {formatDate} from '../../utils/utils'
-
+import { useState, useEffect } from 'react'
+import {formatDate, orderArrOfObjects} from '../../utils/utils'
 
 const TableStore = (props) => {
+    
+    const [dataToShow, setDataToShow] = useState(props.storesFetched)
+    const [nameState, setNameState] = useState(true)
+    const [cuitState, setCuitState] = useState(true)
+    const filterData = (e) => {
+        const value = e.target.value
+        const name = e.target.name
+        
+        if(value === '') {
+            setDataToShow(props.storesFetched)
+            return
+        }
+
+        const newList = props.storesFetched?.filter(store=>store[name] === value)
+        setDataToShow(newList)
+    }
+
+    const orderBy = (e) => {
+        const field = e.target.name
+        const sequence = e.target.value === 'true' ? 'asc' : 'desc'
+        dataToShow && orderArrOfObjects(dataToShow, field, sequence)
+    }
+
+    
+    useEffect(() => {
+        setDataToShow(props.storesFetched)
+
+      // restart filters
+        document.querySelector('[name="active"]').value = ''
+
+    }, [props.storesFetched])
     
     return (
         <table className="table  mt-5">
                 <thead>
                     <tr className='table-dark'>
-                        <th scope="col">Id </th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Cuit</th>
+                        <th scope="col">
+                            Id
+                        </th>
+                        <th scope="col">
+                            <button className='btn btn-light' name='name' value={nameState} onClick={(e)=>{setNameState(!nameState); orderBy(e)}}>Name</button>
+                        </th>
+                        <th scope="col">
+                            <button className='btn btn-light' name='cuit' value={cuitState} onClick={(e)=>{setCuitState(!cuitState); orderBy(e)}}>Cuit</button>
+                        </th>
                         <th scope="col">Concepto 1</th>
                         <th scope="col">Concepto 2</th>
                         <th scope="col">Concepto 3</th>
@@ -23,10 +60,10 @@ const TableStore = (props) => {
                                     <div>Activo</div>
                                 </div>
                                 <div>
-                                    <select name='avtive' className="form-control">
+                                    <select name='active' className="form-control" onChange={filterData}>
                                         <option value="">Todo</option>
-                                        <option value="1">Yes</option>
-                                        <option value="0">No</option>
+                                        <option value="true">1</option>
+                                        <option value="false">0</option>
                                         
                                     </select>  
                                 </div>
@@ -37,8 +74,7 @@ const TableStore = (props) => {
                 </thead>
                 <tbody>
                     {
-                        props.storesFetched?.map((store, i)=>{
-                            console.log(12, store, 12)
+                        dataToShow?.map((store, i)=>{
                             return (
                                 <tr key={store.name}> 
                                     <td className='py-1' > {store.id} </td>

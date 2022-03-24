@@ -4,7 +4,7 @@ const Home = () => {
 
 
     return (
-        <div className='container'>
+        <div className='container-fluid'>
             <h1>HOME</h1>
 
             <button  type='button' className="btn btn-dark" >
