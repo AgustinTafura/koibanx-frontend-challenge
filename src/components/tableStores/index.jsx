@@ -1,8 +1,8 @@
-import { useState, useContext, useEffect} from 'react'
+import {formatDate} from '../../utils/utils'
+
 
 const TableStore = (props) => {
-
-
+    
     return (
         <table className="table  mt-5">
                 <thead>
@@ -49,7 +49,7 @@ const TableStore = (props) => {
                                     }
                                     <td className='py-1' > {store.currentBalance} </td>
                                     <td className='py-1' > {store.active === 'true' ? 1 : 0} </td>
-                                    <td className='py-1' > {store.lastSale} </td>
+                                    <td className='py-1' > {formatDate(new Date(store.lastSale))} </td>
                                 </tr>
                             )
                         })    
