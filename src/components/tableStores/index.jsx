@@ -77,9 +77,7 @@ const TableStore = (props) => {
                 <tbody>
                     {
                         dataToShow?.map((store, i)=>{
-                            console.log(offset, props.rowPerPages*currentPage-1)
                             if(i >= offset && i <= props.rowPerPages*currentPage-1) {
-
                                 return (
                                     <tr key={store.name}> 
                                         <td className='py-1' > {store.id} </td>
