@@ -78,7 +78,7 @@ const TableStore = (props) => {
                     {
                         dataToShow?.map((store, i)=>{
                             console.log(offset, props.rowPerPages*currentPage-1)
-                            if(i >= offset && i < props.rowPerPages*currentPage-1) {
+                            if(i >= offset && i <= props.rowPerPages*currentPage-1) {
 
                                 return (
                                     <tr key={store.name}> 
@@ -102,7 +102,7 @@ const TableStore = (props) => {
             </table>
 
                 {
-                    dataToShow && (
+                    dataToShow?.length > 0 && (
                         <nav aria-label="Page navigation example">
                             <ul className="pagination justify-content-center">
 
