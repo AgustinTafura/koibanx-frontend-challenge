@@ -6,6 +6,9 @@ const TableStore = (props) => {
     const [dataToShow, setDataToShow] = useState(props.storesFetched)
     const [nameState, setNameState] = useState(true)
     const [cuitState, setCuitState] = useState(true)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [offset,setOffset] = useState(0)
+
     const filterData = (e) => {
         const value = e.target.value
         const name = e.target.name
@@ -15,26 +18,25 @@ const TableStore = (props) => {
             return
         }
 
-        const newList = props.storesFetched?.filter(store=>store[name] === value)
+        const newList = props.storesFetched?.filter(store=>store[name] === value).slice(offset,offset+props.rowPerPages)
         setDataToShow(newList)
     }
 
     const orderBy = (e) => {
         const field = e.target.name
         const sequence = e.target.value === 'true' ? 'asc' : 'desc'
-        dataToShow && orderArrOfObjects(dataToShow, field, sequence)
+        dataToShow && setDataToShow(orderArrOfObjects(props.storesFetched, field, sequence).slice(offset,offset+props.rowPerPages))
     }
 
     
     useEffect(() => {
-        setDataToShow(props.storesFetched)
-
+        setDataToShow(props.storesFetched?.slice(offset,offset+props.rowPerPages))
       // restart filters
         document.querySelector('[name="active"]').value = ''
-
     }, [props.storesFetched])
     
     return (
+        <>
         <table className="table  mt-5">
                 <thead>
                     <tr className='table-dark'>
@@ -93,6 +95,51 @@ const TableStore = (props) => {
                 </tbody>
 
             </table>
+
+                {
+                    dataToShow && (
+                        <nav aria-label="Page navigation example">
+                            <ul className="pagination justify-content-center">
+
+                                {currentPage !== 1 && (
+                                    <li className="page-item">
+                                        <a className="page-link" href="/stores"
+                                            onClick={(e)=>{
+                                                e.preventDefault();
+                                                setCurrentPage(currentPage-1)
+                                                setDataToShow(props.storesFetched.slice(offset-props.rowPerPages, offset))
+                                                setOffset(offset-props.rowPerPages)
+                                            }}>
+                                            Previous
+                                        </a>
+                                    </li>
+
+                                )}
+                                
+                                    <li className="page-item"><a className="page-link" href="/stores"  onClick={(e)=>e.preventDefault()}>{currentPage}</a></li>
+                                
+                                {currentPage !== Math.ceil(props.storesFetched?.length/props.rowPerPages) && (
+                                    <li className="page-item">
+                                        <a className="page-link" href="/stores"
+                                            onClick={(e)=>{
+                                                    e.preventDefault();
+                                                    setCurrentPage(currentPage+1)
+                                                    setDataToShow(props.storesFetched.slice(offset+props.rowPerPages, offset+props.rowPerPages*2))
+                                                    setOffset(offset+props.rowPerPages)
+                                            }}>
+                                                Next
+                                        </a>
+                                    </li>                      
+                                )}
+
+                                
+                            </ul>
+                        </nav>
+                    )
+                }
+            
+
+        </>
     )
 }   
 

@@ -1,8 +1,8 @@
 
-import storesListFromDB from '../../db/stores.json'
+import backendResponse from '../../db/index'
 
 const Navbar = (props) => {
-
+    const db = backendResponse()
     const getStoresFromDB = (e)=>{
         const input = e.target[0].value
         const storeList = []
@@ -13,7 +13,7 @@ const Navbar = (props) => {
 
         if (input !== '') {
 
-            storesListFromDB.map(store => {
+            db.data.map(store => {
                 if(
                     store.id.includes(input)
                     || store.name.toLowerCase().includes(input)
@@ -23,8 +23,9 @@ const Navbar = (props) => {
                 }
             })
         }
-        props.setStoresFetched(storeList)
 
+        props.setStoresFetched(storeList)
+        props.setRowPerPages(db.rowsPerPage)
     }
     return (
         <nav className="navbar navbar-light bg-light">
