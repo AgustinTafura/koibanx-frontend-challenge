@@ -18,19 +18,19 @@ const TableStore = (props) => {
             return
         }
 
-        const newList = props.storesFetched?.filter(store=>store[name] === value).slice(offset,offset+props.rowPerPages)
+        const newList = props.storesFetched?.filter(store=>store[name] === value)
         setDataToShow(newList)
     }
 
     const orderBy = (e) => {
         const field = e.target.name
         const sequence = e.target.value === 'true' ? 'asc' : 'desc'
-        dataToShow && setDataToShow(orderArrOfObjects(props.storesFetched, field, sequence).slice(offset,offset+props.rowPerPages))
+        dataToShow && setDataToShow(orderArrOfObjects(dataToShow, field, sequence))
     }
 
     
     useEffect(() => {
-        setDataToShow(props.storesFetched?.slice(offset,offset+props.rowPerPages))
+        setDataToShow(props.storesFetched)
       // restart filters
         document.querySelector('[name="active"]').value = ''
     }, [props.storesFetched])
@@ -77,19 +77,24 @@ const TableStore = (props) => {
                 <tbody>
                     {
                         dataToShow?.map((store, i)=>{
-                            return (
-                                <tr key={store.name}> 
-                                    <td className='py-1' > {store.id} </td>
-                                    <td className='py-1' > {store.name} </td>
-                                    <td className='py-1' > {store.cuit} </td>
-                                    {
-                                        store.concepts?.map((concept, i)=><td key={concept} className='py-1' > {concept} </td>)
-                                    }
-                                    <td className='py-1' > {store.currentBalance} </td>
-                                    <td className='py-1' > {store.active === 'true' ? 1 : 0} </td>
-                                    <td className='py-1' > {formatDate(new Date(store.lastSale))} </td>
-                                </tr>
-                            )
+                            console.log(offset, props.rowPerPages*currentPage-1)
+                            if(i >= offset && i < props.rowPerPages*currentPage-1) {
+
+                                return (
+                                    <tr key={store.name}> 
+                                        <td className='py-1' > {store.id} </td>
+                                        <td className='py-1' > {store.name} </td>
+                                        <td className='py-1' > {store.cuit} </td>
+                                        {
+                                            store.concepts?.map((concept, i)=><td key={concept} className='py-1' > {concept} </td>)
+                                        }
+                                        <td className='py-1' > {store.currentBalance} </td>
+                                        <td className='py-1' > {store.active === 'true' ? 1 : 0} </td>
+                                        <td className='py-1' > {formatDate(new Date(store.lastSale))} </td>
+                                    </tr>
+                                )
+                            }
+                            
                         })    
                     }
                 </tbody>
@@ -107,7 +112,6 @@ const TableStore = (props) => {
                                             onClick={(e)=>{
                                                 e.preventDefault();
                                                 setCurrentPage(currentPage-1)
-                                                setDataToShow(props.storesFetched.slice(offset-props.rowPerPages, offset))
                                                 setOffset(offset-props.rowPerPages)
                                             }}>
                                             Previous
@@ -118,13 +122,12 @@ const TableStore = (props) => {
                                 
                                     <li className="page-item"><a className="page-link" href="/stores"  onClick={(e)=>e.preventDefault()}>{currentPage}</a></li>
                                 
-                                {currentPage !== Math.ceil(props.storesFetched?.length/props.rowPerPages) && (
+                                {currentPage !== Math.ceil(dataToShow?.length/props.rowPerPages) && (
                                     <li className="page-item">
                                         <a className="page-link" href="/stores"
                                             onClick={(e)=>{
                                                     e.preventDefault();
                                                     setCurrentPage(currentPage+1)
-                                                    setDataToShow(props.storesFetched.slice(offset+props.rowPerPages, offset+props.rowPerPages*2))
                                                     setOffset(offset+props.rowPerPages)
                                             }}>
                                                 Next
